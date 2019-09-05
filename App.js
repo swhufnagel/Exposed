@@ -8,6 +8,7 @@ import BottomTabBar from "react-navigation-selective-tab-bar";
 import Photos from "./src/pages/Photos"
 import Camera from "./src/pages/Camera"
 import Contacts from "./src/pages/Contacts"
+import { Ionicons } from '@expo/vector-icons';
 
 const LoginStack = createStackNavigator({
   Login: LoginScreen
@@ -33,10 +34,42 @@ const TabNav = createBottomTabNavigator({
 
   //   })
   // },
-  Profile: ProfileTab,
-  Photos: PhotosTab,
-  Camera: CameraTab,
-  Contacts: ContactsTab
+  Profile: {
+    screen: ProfileTab,
+    navigationOptions: {
+      tabBarIcon: ({ focused, tintColor }) => {
+        const iconName = `ios-contact${focused ? '' : 's'}`;
+        return <Ionicons name={iconName} size={25} color={tintColor} />;
+      },
+    },
+  },
+  Photos: {
+    screen: PhotosTab,
+    navigationOptions: {
+      tabBarIcon: ({ focused, tintColor }) => {
+        const iconName = `ios-image${focused ? '' : 's'}`;
+        return <Ionicons name={iconName} size={25} color={tintColor} />;
+      },
+    },
+  },
+  Camera: {
+    screen: CameraTab,
+    navigationOptions: {
+      tabBarIcon: ({ focused, tintColor }) => {
+        const iconName = `ios-${focused ? '' : 'reverse-'}camera`;
+        return <Ionicons name={iconName} size={25} color={tintColor} />;
+      },
+    },
+  },
+  Contacts: {
+    screen: ContactsTab,
+    navigationOptions: {
+      tabBarIcon: ({ focused, tintColor }) => {
+        const iconName = `${focused ? '' : 'md-'}ios-filing`;
+        return <Ionicons name={iconName} size={25} color={tintColor} />;
+      },
+    },
+  }
 },
   {
     tabBarComponent: props => {
