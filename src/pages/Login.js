@@ -5,6 +5,8 @@ import { AuthSession } from 'expo';
 import jwtDecode from 'jwt-decode';
 import { LinearGradient } from "expo-linear-gradient";
 import Constants from "expo-constants";
+import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
+import TouchButton from '../components/button';
 function toQueryString(params) {
     return '?' + Object.entries(params)
         .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
@@ -18,6 +20,19 @@ class LoginScreen extends Component {
             name: null,
             userLoginData: ""
         }
+    }
+    static navigationOptions = ({ navigation }) => {
+        return {
+            headerStyle: {
+                paddingTop: Constants.statusBarHeight,
+                backgroundColor: "#b0b0b0",
+                marginRight: "2%",
+                marginLeft: "2%"
+            },
+            headerTitle: (
+                <Image style={{ width: 200, height: 30 }} source={require('../../assets/rawLogo.png')} className="AppLogo" alt="logo" />
+            )
+        };
     }
     _loginWithAuth0 = async () => {
         const auth0Domain = "https://dev-ph5frrsm.auth0.com";
@@ -69,22 +84,21 @@ class LoginScreen extends Component {
         }
         const styles = StyleSheet.create({
             App: {
-                height: "200%"
+                height: "200%",
+                // paddingTop: Constants.statusBarHeight
+
             },
             container: {
                 flex: 1,
-                paddingTop: Constants.statusBarHeight
             },
             AppLogo: {
-                marginTop: "45%",
-                width: 250,
-                height: 250
+                width: 425,
+                height: 425
             },
             LoginButton: {
                 width: 250,
-                marginTop: 130,
                 borderRadius: 25,
-                borderBottomColor: "#731c1c",
+                borderBottomColor: "#522c2c",
                 borderRightColor: "#522c2c",
                 padding: 5,
                 backgroundColor: "#852e2e",
@@ -92,19 +106,26 @@ class LoginScreen extends Component {
                 borderColor: "#cc2525",
                 color: 'white',
             },
+            buttonText: {
+                padding: 8,
+                fontSize: 20,
+                textAlign: 'center'
+            }
 
         })
         return (
             <ThemeProvider theme={theme}>
-                <View style={styles.App} className="App" >
+                <View className="App" >
                     <LinearGradient
-                        colors={['#FF0000', '#faa2a2', '#ff8c8c']}
+                        colors={['#FF0000', '#faa2a2', '#db9c9c', '#cc8585', '#d93f3f']}
                         style={{ width: '100%', height: '100%', padding: 0, alignItems: 'center', borderRadius: 0 }}>
                         <Image source={require('../../assets/rawLogo.png')} style={styles.AppLogo} className="AppLogo" alt="logo" />
-                        <Button raised type="clear" title="Go to Next Page?" navigation={this.props.navigation}
-                            onPress={() => this.goToNextPage()} />
-                        <Button raised style={styles.LoginButton} type="clear" title="Login Auth0?" navigation={this.props.navigation}
-                            onPress={() => this._loginWithAuth0()} />
+                        <TouchButton
+                            style={styles.LoginButton}
+                            buttonText={<Text style={styles.buttonText}>Login </Text>}
+                            navigation={this.props.navigation}
+                            onPress={this._loginWithAuth0}
+                        />
                     </LinearGradient>
                 </View>
             </ThemeProvider>
