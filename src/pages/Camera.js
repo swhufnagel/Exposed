@@ -19,22 +19,8 @@ class Photos extends React.Component {
             headerTintColor: 'black',
             headerTitleStyle: {
                 fontWeight: 'bold',
-            },
-            headerRight: (
-                <Icon
-                    name="cog"
-                    type="font-awesome"
-                    color="black"
-                    onPress={navigation.getParam("showSettings")}
-                />
-            ),
-            headerLeft: (
-                <Icon
-                    name='arrow-left'
-                    type='font-awesome'
-                    color='black'
-                    onPress={navigation.getParam("nowLogout")}
-                />
+            }, headerTitle: (
+                <Image style={{ width: 200, height: 30 }} source={require('../../assets/ExposedText.png')} className="AppLogo" alt="logo" />
             ),
         }
     };

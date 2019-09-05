@@ -3,6 +3,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Image, View, Text, StyleSheet } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import Constants from "expo-constants";
+import { SimpleLineIcons, Ionicons } from '@expo/vector-icons';
 
 class ProfileScreen extends React.Component {
 
@@ -19,18 +20,21 @@ class ProfileScreen extends React.Component {
             headerTitleStyle: {
                 fontWeight: 'bold',
             },
+            headerTitle: (
+                <Image style={{ width: 200, height: 30 }} source={require('../../assets/ExposedText.png')} className="AppLogo" alt="logo" />
+            ),
             headerRight: (
-                <Icon
-                    name="cog"
-                    type="font-awesome"
+                <Ionicons
+                    name="ios-cog"
                     color="black"
+                    size={30}
                     onPress={navigation.getParam("showSettings")}
                 />
             ),
             headerLeft: (
-                <Icon
-                    name='arrow-left'
-                    type='font-awesome'
+                <SimpleLineIcons
+                    name='logout'
+                    size={25}
                     color='black'
                     onPress={navigation.getParam("nowLogout")}
                 />
@@ -70,7 +74,8 @@ class ProfileScreen extends React.Component {
         })
         return (
             <View>
-                <LinearGradient colors={['#A9A9A9', '#ff8c8c', '#FF0000']}
+
+                <LinearGradient colors={['#FF0000', '#faa2a2', '#db9c9c', '#cc8585', '#d93f3f']}
                     style={{ width: '100%', height: '100%', padding: 0, alignItems: 'center', borderRadius: 0 }}>
                     <Image
                         style={styles.photo}

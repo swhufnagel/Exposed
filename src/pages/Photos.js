@@ -20,22 +20,10 @@ class Photos extends React.Component {
             headerTitleStyle: {
                 fontWeight: 'bold',
             },
-            headerRight: (
-                <Icon
-                    name="cog"
-                    type="font-awesome"
-                    color="black"
-                    onPress={navigation.getParam("showSettings")}
-                />
+            headerTitle: (
+                <Image style={{ width: 200, height: 30 }} source={require('../../assets/ExposedText.png')} className="AppLogo" alt="logo" />
             ),
-            headerLeft: (
-                <Icon
-                    name='arrow-left'
-                    type='font-awesome'
-                    color='black'
-                    onPress={navigation.getParam("nowLogout")}
-                />
-            ),
+
         }
     };
     constructor(props) {
@@ -134,7 +122,7 @@ class Photos extends React.Component {
         );
         return (
             <View>
-                <LinearGradient colors={['#A9A9A9', '#ff8c8c', '#FF0000']}
+                <LinearGradient colors={['#FF0000', '#faa2a2', '#db9c9c', '#cc8585', '#d93f3f']}
                     style={{ width: '100%', height: '100%', padding: 0, alignItems: 'center', borderRadius: 0 }}>
                     {this.state.photos ? <ScrollView style={styles.container}>
                         {/* {this._renderPhotos(this.state.photos)} */}

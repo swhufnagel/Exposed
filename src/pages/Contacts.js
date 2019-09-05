@@ -20,22 +20,8 @@ class Contacts extends React.Component {
             headerTintColor: 'black',
             headerTitleStyle: {
                 fontWeight: 'bold',
-            },
-            headerRight: (
-                <Icon
-                    name="cog"
-                    type="font-awesome"
-                    color="black"
-                    onPress={navigation.getParam("showSettings")}
-                />
-            ),
-            headerLeft: (
-                <Icon
-                    name='arrow-left'
-                    type='font-awesome'
-                    color='black'
-                    onPress={navigation.getParam("nowLogout")}
-                />
+            }, headerTitle: (
+                <Image style={{ width: 200, height: 30 }} source={require('../../assets/ExposedText.png')} className="AppLogo" alt="logo" />
             ),
         }
     };
@@ -86,7 +72,7 @@ class Contacts extends React.Component {
         })
         return (
             <View>
-                <LinearGradient colors={['#A9A9A9', '#ff8c8c', '#FF0000']}
+                <LinearGradient colors={['#FF0000', '#faa2a2', '#db9c9c', '#cc8585', '#d93f3f']}
                     style={{ width: '100%', height: '100%', padding: 0, alignItems: 'center', borderRadius: 0 }}>
                     {this.state.permissions ? <ScrollView style={styles.list}>
                         {this.state.contacts.map((l, i) => (

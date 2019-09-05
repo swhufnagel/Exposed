@@ -7,6 +7,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import Constants from "expo-constants";
 import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
 import TouchButton from '../components/button';
+import SvgAnimatedLinearGradient from 'react-native-svg-animated-linear-gradient'
+import Svg, { Circle, Rect } from 'react-native-svg';
+
 function toQueryString(params) {
     return '?' + Object.entries(params)
         .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
@@ -30,7 +33,7 @@ class LoginScreen extends Component {
                 marginLeft: "2%"
             },
             headerTitle: (
-                <Image style={{ width: 200, height: 30 }} source={require('../../assets/rawLogo.png')} className="AppLogo" alt="logo" />
+                <Image style={{ width: 200, height: 30 }} source={require('../../assets/ExposedText.png')} className="AppLogo" alt="logo" />
             )
         };
     }
@@ -119,13 +122,23 @@ class LoginScreen extends Component {
                     <LinearGradient
                         colors={['#FF0000', '#faa2a2', '#db9c9c', '#cc8585', '#d93f3f']}
                         style={{ width: '100%', height: '100%', padding: 0, alignItems: 'center', borderRadius: 0 }}>
-                        <Image source={require('../../assets/rawLogo.png')} style={styles.AppLogo} className="AppLogo" alt="logo" />
+                        {/* <SvgAnimatedLinearGradient height={700}
+                        width={700}
+                        primaryColor="#db9c9c"
+                        secondaryColor="#FF0000">
+
+                        <Rect x="0" y="0" rx="0" ry="0" width="700" height="700" /> */}
+                        <Image
+                            source={require('../../assets/rawLogo.png')}
+                            style={styles.AppLogo}
+                            className="AppLogo" alt="logo" />
                         <TouchButton
                             style={styles.LoginButton}
                             buttonText={<Text style={styles.buttonText}>Login </Text>}
                             navigation={this.props.navigation}
                             onPress={this._loginWithAuth0}
                         />
+                        {/* </SvgAnimatedLinearGradient> */}
                     </LinearGradient>
                 </View>
             </ThemeProvider>

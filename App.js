@@ -38,7 +38,7 @@ const TabNav = createBottomTabNavigator({
     screen: ProfileTab,
     navigationOptions: {
       tabBarIcon: ({ focused, tintColor }) => {
-        const iconName = `ios-contact${focused ? '' : 's'}`;
+        const iconName = `${focused ? 'md-contact' : 'ios-contact'}`;
         return <Ionicons name={iconName} size={25} color={tintColor} />;
       },
     },
@@ -56,7 +56,7 @@ const TabNav = createBottomTabNavigator({
     screen: CameraTab,
     navigationOptions: {
       tabBarIcon: ({ focused, tintColor }) => {
-        const iconName = `ios-${focused ? '' : 'reverse-'}camera`;
+        const iconName = `${focused ? 'md-camera' : 'ios-camera'}`;
         return <Ionicons name={iconName} size={25} color={tintColor} />;
       },
     },
@@ -65,7 +65,7 @@ const TabNav = createBottomTabNavigator({
     screen: ContactsTab,
     navigationOptions: {
       tabBarIcon: ({ focused, tintColor }) => {
-        const iconName = `${focused ? '' : 'md-'}ios-filing`;
+        const iconName = `${focused ? 'md-filing' : 'ios-filing'}`;
         return <Ionicons name={iconName} size={25} color={tintColor} />;
       },
     },
@@ -77,10 +77,14 @@ const TabNav = createBottomTabNavigator({
         <BottomTabBar
           {...props} // Required
           display={["Profile", "Photos", "Camera", "Contacts"]} // Required
-          background="black" // Optional
+          background="darkgrey" // Optional
         />
       );
-    }
+    },
+    tabBarOptions: {
+      activeTintColor: '#FF0000',
+      inactiveTintColor: "black",
+    },
   }
 );
 
