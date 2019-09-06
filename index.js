@@ -2,7 +2,7 @@ import express from "express";
 import Expo from "expo-server-sdk";
 import mongoose from "mongoose";
 
-const db = require("../models");
+const db = require("./models");
 
 const PORT_NUMBER = process.env.PORT || 8080;
 const app = express();
@@ -79,7 +79,6 @@ app.post("/contacts/store", async (req, res) => {
         }
     }
     console.log("response:", response);
-    console.log("contact Ids ---", contactIds);
 
     db.User.findOneAndUpdate(
         { id: owner },
