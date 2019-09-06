@@ -4,7 +4,7 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "npm run serve",
+    "web": "node -r esm server.js",
     "eject": "expo eject",
     "seed": "node scripts/seedDB.js",
     "serve": "node -r esm server.js"
