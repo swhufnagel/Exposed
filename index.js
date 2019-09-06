@@ -91,5 +91,5 @@ app.post("/contacts/store", async (req, res) => {
 });
 
 app.listen(PORT_NUMBER, () => {
-    console.log(`Server Online on Port ${PORT_NUMBER}`);
+    console.log(`Server Online cmon on Port ${PORT_NUMBER}`);
 });
