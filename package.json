@@ -7,7 +7,7 @@
     "web": "node -r esm server.js",
     "eject": "expo eject",
     "seed": "node scripts/seedDB.js",
-    "serve": "node -r esm server.js"
+    "serve": "node -r esm index.js"
   },
   "dependencies": {
     "axios": "^0.19.0",
