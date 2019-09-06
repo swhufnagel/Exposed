@@ -1,12 +1,16 @@
 import React from 'react';
-import { LinearGradient } from "expo-linear-gradient";
-import { Image, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Icon, } from 'react-native-elements';
-import Constants from "expo-constants";
+import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
-
-class Photos extends React.Component {
+import * as FaceDetector from 'expo-face-detector';
+import { Entypo } from '@expo/vector-icons';
+const styles = StyleSheet.create({
+    lock: {
+        marginTop: "50%",
+        textAlign: 'center'
+    }
+})
+export default class CameraView extends React.Component {
     static navigationOptions = ({ navigation }) => {
         return {
 
@@ -33,46 +37,38 @@ class Photos extends React.Component {
         const { status } = await Permissions.askAsync(Permissions.CAMERA);
         this.setState({ hasCameraPermission: status === 'granted' });
     }
-
+    detectFaces = async imageUri => {
+        const options = { mode: FaceDetector.Constants.Mode.fast };
+        return await FaceDetector.detectFacesAsync(imageUri, options);
+    };
     render() {
-
-        const styles = StyleSheet.create({
-            App: {
-                height: "200%",
-                paddingTop: Constants.statusBarHeight
-
-            },
-            container: {
-                flex: 1,
-            },
-            AppLogo: {
-                marginTop: "45%",
-                width: 250,
-                height: 250
-            },
-            LoginButton: {
-                width: 250,
-                marginTop: 130,
-                borderRadius: 25,
-                borderBottomColor: "#731c1c",
-                borderRightColor: "#522c2c",
-                padding: 5,
-                backgroundColor: "#852e2e",
-                borderWidth: 2,
-                borderColor: "#cc2525",
-                color: 'white',
-            },
-
-        })
         const { hasCameraPermission } = this.state;
         if (hasCameraPermission === null) {
             return <View />;
         } else if (hasCameraPermission === false) {
-            return <Text>No access to camera</Text>;
+            return <View>
+                <Entypo
+                    name="lock"
+                    size={100}
+                    color="rgba(147, 147, 147, 0.52)"
+                    onPress={this.getPhotos}
+                    style={styles.lock} />
+                <Text onPress={this.getPhotos}>Click or shake to unlock</Text>
+            </View>;
         } else {
             return (
-                <View>
-                    <Camera style={{ flex: 1 }} type={this.state.type}>
+                <View style={{ flex: 1 }}>
+                    <Camera
+                        style={{ flex: 1 }}
+                        type={this.state.type}
+                        onFacesDetected={this.handleFacesDetected}
+                        faceDetectorSettings={{
+                            mode: FaceDetector.Constants.Mode.fast,
+                            detectLandmarks: FaceDetector.Constants.Landmarks.none,
+                            runClassifications: FaceDetector.Constants.Classifications.none,
+                            minDetectionInterval: 100,
+                            tracking: true
+                        }}>
                         <View
                             style={{
                                 flex: 1,
@@ -97,10 +93,8 @@ class Photos extends React.Component {
                             </TouchableOpacity>
                         </View>
                     </Camera>
-                </View >
+                </View>
             );
         }
     }
 }
-
-export default Photos;

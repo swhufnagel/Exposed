@@ -6,6 +6,7 @@ import Constants from "expo-constants";
 import * as Permissions from 'expo-permissions';
 import * as Contact from "expo-contacts";
 import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
+import { Entypo } from '@expo/vector-icons';
 
 class Contacts extends React.Component {
     static navigationOptions = ({ navigation }) => {
@@ -31,6 +32,9 @@ class Contacts extends React.Component {
             contacts: null,
             permissions: false,
         }
+    }
+    async componentDidMount() {
+        this.permissionFlow();
     }
     permissionFlow = async () => {
         const { status } = await Permissions.askAsync(Permissions.CONTACTS);
@@ -67,8 +71,11 @@ class Contacts extends React.Component {
             item: {
                 borderRadius: 10,
                 backgroundColor: 'transparent'
-            }
-
+            },
+            lock: {
+                marginTop: "50%",
+                textAlign: 'center'
+            },
         })
         return (
             <View>
@@ -84,6 +91,8 @@ class Contacts extends React.Component {
                                     activeScale={0.95} //
                                     key={l.id}
                                     title={l.name}
+                                    subtitle={l.phoneNumbers[0].digits ?
+                                        l.phoneNumbers[0].digits : "No number found"}
                                     name={l.name}
                                     bottomDivider={true}
                                     containerStyle={styles.item}
@@ -100,7 +109,15 @@ class Contacts extends React.Component {
 
                         ))}
                     </ScrollView> :
-                        <Button title="Click to Unlock" onPress={this.permissionFlow()} />
+                        <View>
+                            <Entypo
+                                name="lock"
+                                size={100}
+                                color="rgba(147, 147, 147, 0.52)"
+                                onPress={this.permissionFlow}
+                                style={styles.lock} />
+                            <Text onPress={this.permissionFlow}>Click or shake to unlock</Text>
+                        </View>
                     }
 
                 </LinearGradient>

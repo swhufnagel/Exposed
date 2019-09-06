@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { LinearGradient } from "expo-linear-gradient";
 import { Image, View, Text, StyleSheet, CameraRoll, ScrollView } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import Constants from "expo-constants";
 import * as Permissions from 'expo-permissions';
 import GridList from 'react-native-grid-list';
+import { Entypo } from '@expo/vector-icons';
 
-class Photos extends React.Component {
+export default class Photos extends PureComponent {
     static navigationOptions = ({ navigation }) => {
         return {
 
@@ -30,117 +31,74 @@ class Photos extends React.Component {
         super(props)
         this.state = {
             photos: null,
-            permission: false,
+            loaded: false,
             status: false,
             photoUris: null,
         }
     }
-
+    async componentDidMount() {
+        this.getPhotos();
+    }
     getPhotos = async () => {
         await Permissions.askAsync(Permissions.CAMERA_ROLL);
         let photos = await CameraRoll.getPhotos({ first: 10, assetType: "All", groupTypes: "All" });
-        this.setState({ photos }, () => {
-            // console.log("testing ", photos.edges[0].node.image.uri);
-            let photoUris = photos.edges.map((photo, i) => {
-            })
-            this.setState({ photoUris });
-            console.log("photos", photoUris);
-        });
-        return photos;
+        let newPhotoUris = [];
+        let photoUris = await photos.edges.map((photo, i) => {
+            photo = photo.node.image.uri;
+            newPhotoUris.push(photo);
+        })
+        this.setState({ photoUris: newPhotoUris }, () => {
+            this.makeRenderable();
+        })
     }
-    _renderPhotos(photos) {
-        let images = [];
-        for (let { node: photo } of photos.edges) {
-            images.push(
-                <Image
-                    source={photo.image}
-                    resizeMode="contain"
-                    style={{ height: 100, width: 100, resizeMode: 'contain' }}
-                />
-            );
-        }
-        return images;
+    makeRenderable = () => {
+        let photoUris = this.state.photoUris;
+        let newNew = [];
+        let newPhotoUris = photoUris.map((uri, i) => {
+            uri = { thumbnail: { uri: uri } };
+            newNew.push(uri);
+        })
+        this.setState({ photoUris: newNew }, () => {
+            this.setState({ loaded: true })
+        })
     }
-    renderItemAnimationAndSeparator = ({ item, animation }) => (
+    renderItem = ({ item, animation }) => (
         <Image
-            style={{
-                width: '100%',
-                height: '100%',
-                borderRadius: 10,
-            }}
+            style={styles.image}
             source={item.thumbnail}
             onLoad={() => animation.start()}
         />
     );
     render() {
-        const styles = StyleSheet.create({
-            App: {
-                height: "200%",
-                backgroundColor: 'black'
-            },
-            container: {
-                flex: 1,
-                paddingTop: Constants.statusBarHeight
-            },
-            photo: {
-                height: "100%",
-                width: "100%",
-                borderRadius: 300 / 2,
-            },
-            gridAnimationAndSeparator: {
-                backgroundColor: 'transparent',
-                width: 300
-            },
-            gridList: {
-                width: '100%'
-            },
-            container: {
-                flex: 1,
-                margin: '5%',
-            },
-            imageRadius: {
-                width: '100%',
-                height: '100%',
-                borderRadius: 10,
-            },
-            image: {
-                width: '100%',
-                height: '100%',
-            },
-        });
 
-        const image = photoUris => ({
-            thumbnail: {
-                uri: photoUris.map((photoUri, i) => {
-                    console.log(photoUri)
-                    // photoUri
-                }),
-            },
-        });
-        const itemsAnimationAndSeparator = Array.from(Array(5)).map((_, index) =>
-            image(index),
-        );
         return (
             <View>
                 <LinearGradient colors={['#FF0000', '#faa2a2', '#db9c9c', '#cc8585', '#d93f3f']}
                     style={{ width: '100%', height: '100%', padding: 0, alignItems: 'center', borderRadius: 0 }}>
-                    {this.state.photos ? <ScrollView style={styles.container}>
-                        {/* {this._renderPhotos(this.state.photos)} */}
-                        <View style={styles.gridAnimationAndSeparator}>
+                    {this.state.loaded ? <ScrollView style={styles.container}>
+                        <View style={styles.container}>
                             <GridList
-                                style={styles.gridList}
-                                showAnimation
-                                showSeparator
-                                data={itemsAnimationAndSeparator}
-                                numColumns={3}
-                                renderItem={this.renderItemAnimationAndSeparator}
                                 separatorBorderWidth={10}
                                 separatorBorderColor={'transparent'}
                                 animationInitialBackgroundColor={'transparent'}
-                            />
+                                style={styles.gridList}
+                                showAnimation
+                                data={this.state.photoUris}
+                                numColumns={3}
+                                renderItem={this.renderItem}
+                            >
+                            </GridList>
                         </View>
                     </ScrollView> :
-                        <Button title="Click to Unlock Photos" onPress={this.getPhotos} />
+                        <View>
+                            <Entypo
+                                name="lock"
+                                size={100}
+                                color="rgba(147, 147, 147, 0.52)"
+                                onPress={this.getPhotos}
+                                style={styles.lock} />
+                            <Text onPress={this.getPhotos}>Click or shake to unlock</Text>
+                        </View>
                     }
                 </LinearGradient>
             </View>
@@ -148,5 +106,28 @@ class Photos extends React.Component {
         )
     }
 }
+const styles = StyleSheet.create({
+    App: {
+        height: '200%',
+        backgroundColor: 'black'
+    },
+    lock: {
+        marginTop: "50%",
+        textAlign: 'center'
+    },
+    container: {
+        width: '100%',
 
-export default Photos;
+    },
+    gridList: {
+        marginTop: '5%',
+        marginLeft: '2.5%',
+        backgroundColor: 'transparent'
+    },
+    image: {
+        width: '90%',
+        height: '90%',
+        borderRadius: 10,
+        backgroundColor: 'transparent',
+    },
+});

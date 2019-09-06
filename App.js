@@ -6,7 +6,7 @@ import ProfileScreen from "./src/pages/ProfileScreen";
 import { createStackNavigator, createSwitchNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import BottomTabBar from "react-navigation-selective-tab-bar";
 import Photos from "./src/pages/Photos"
-import Camera from "./src/pages/Camera"
+import CameraView from "./src/pages/Camera"
 import Contacts from "./src/pages/Contacts"
 import { Ionicons } from '@expo/vector-icons';
 
@@ -20,7 +20,7 @@ const PhotosTab = createStackNavigator({
   Photos: { screen: Photos },
 })
 const CameraTab = createStackNavigator({
-  Camera: { screen: Camera },
+  Camera: { screen: CameraView },
 })
 const ContactsTab = createStackNavigator({
   Contacts: { screen: Contacts },
