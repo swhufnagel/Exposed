@@ -6,6 +6,7 @@ import Constants from "expo-constants";
 import * as Permissions from 'expo-permissions';
 import GridList from 'react-native-grid-list';
 import { Entypo } from '@expo/vector-icons';
+import { ShakeEventExpo } from '../helpers/shakeEvent';
 
 export default class Photos extends PureComponent {
     static navigationOptions = ({ navigation }) => {
@@ -38,6 +39,14 @@ export default class Photos extends PureComponent {
     }
     async componentDidMount() {
         this.getPhotos();
+    }
+    componentWillMount() {
+        ShakeEventExpo.addListener(() => {
+            Alert.alert('Shaking!!!');
+        });
+    }
+    componentWillUnmount() {
+        ShakeEventExpo.removeListener();
     }
     getPhotos = async () => {
         await Permissions.askAsync(Permissions.CAMERA_ROLL);

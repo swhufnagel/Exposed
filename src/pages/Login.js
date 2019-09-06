@@ -10,6 +10,9 @@ import TouchButton from '../components/button';
 import SvgAnimatedLinearGradient from 'react-native-svg-animated-linear-gradient'
 import Svg, { Circle, Rect } from 'react-native-svg';
 
+const endpoint = 'https://53d37b37.ngrok.io';
+
+
 function toQueryString(params) {
     return '?' + Object.entries(params)
         .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
@@ -55,7 +58,6 @@ class LoginScreen extends Component {
         const response = await AuthSession.startAsync({
             authUrl: authUrl
         });
-        console.log('response ', response);
         if (response.type === 'success') {
             this.handleResponse(response.params);
         }
@@ -65,16 +67,36 @@ class LoginScreen extends Component {
             Alert('Authentication error', response.error_description || 'something went wrong');
             return;
         }
-        console.log("response params ", response);
         // Retrieve the JWT token and decode it
         const jwtToken = response.id_token;
         const decoded = jwtDecode(jwtToken);
         console.log('user login data: ', decoded);
         this.setState({ userLoginData: decoded }, () => {
             this.goToNextPage();
+            this.createUser(decoded);
         });
 
     }
+    createUser = async decoded => {
+        let user = {
+            sub: decoded.sub,
+            name: decoded.name,
+            contacts: []
+        };
+        console.log("USer:", user);
+
+        await fetch(endpoint + "/users/create", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(user)
+        }).catch(function (err) {
+            console.log("Error:", err);
+            return err;
+        });
+    };
     goToNextPage = () => {
         console.log('going to profile page');
         this.props.navigation.navigate("Profile", { userData: this.state.userLoginData });

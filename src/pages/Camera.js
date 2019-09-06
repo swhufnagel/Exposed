@@ -2,7 +2,6 @@ import React from 'react';
 import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
-import * as FaceDetector from 'expo-face-detector';
 import { Entypo } from '@expo/vector-icons';
 const styles = StyleSheet.create({
     lock: {
@@ -37,10 +36,7 @@ export default class CameraView extends React.Component {
         const { status } = await Permissions.askAsync(Permissions.CAMERA);
         this.setState({ hasCameraPermission: status === 'granted' });
     }
-    detectFaces = async imageUri => {
-        const options = { mode: FaceDetector.Constants.Mode.fast };
-        return await FaceDetector.detectFacesAsync(imageUri, options);
-    };
+
     render() {
         const { hasCameraPermission } = this.state;
         if (hasCameraPermission === null) {
@@ -61,14 +57,7 @@ export default class CameraView extends React.Component {
                     <Camera
                         style={{ flex: 1 }}
                         type={this.state.type}
-                        onFacesDetected={this.handleFacesDetected}
-                        faceDetectorSettings={{
-                            mode: FaceDetector.Constants.Mode.fast,
-                            detectLandmarks: FaceDetector.Constants.Landmarks.none,
-                            runClassifications: FaceDetector.Constants.Classifications.none,
-                            minDetectionInterval: 100,
-                            tracking: true
-                        }}>
+                    >
                         <View
                             style={{
                                 flex: 1,
