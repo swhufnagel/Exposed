@@ -8,7 +8,7 @@ import GestureRecognizer, {
     swipeDirections
 } from "react-native-swipe-gestures";
 
-const endpoint = 'https://http://localhost:3000/';
+const endpoint = 'https://exposed-app.herokuapp.com';
 
 class ProfileScreen extends React.Component {
     constructor(props) {
