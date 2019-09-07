@@ -41,7 +41,7 @@ class LoginScreen extends Component {
         };
     }
     _loginWithAuth0 = async () => {
-        const auth0Domain = "https://dev-ph5frrsm.auth0.com";
+        const auth0Domain = "https://dev-ph5frrsm.auth0.com/";
         const auth0ClientId = "RQrVtYsNqWFmQHu3oCb6wIzlPT272DDg";
         const redirectUrl = AuthSession.getRedirectUrl();
         const queryParams = toQueryString({
@@ -85,7 +85,7 @@ class LoginScreen extends Component {
         };
         console.log("USer:", user);
 
-        await fetch(endpoint + "/users/create", {
+        await fetch(endpoint + "users/create/", {
             method: "POST",
             headers: {
                 Accept: "application/json",

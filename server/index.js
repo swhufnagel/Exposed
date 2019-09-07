@@ -6,17 +6,18 @@ const PORT_NUMBER = process.env.PORT || 8080;
 const app = express();
 const mongoUri = 'mongodb+srv://swhufnagel:poopyy.1@exposeddatagroup0-s3r3z.mongodb.net/test'
 const herokuUri = 'mongodb://swhufnagel:poopyy11@ds211368.mlab.com:11368/heroku_14z6qc4d'
+const morgan = require("morgan");
+
+app.use(morgan('combined'))
 // Define Middleware
 
 mongoose.connect(
-    mongoUri || process.env.MONGODB_URI || herokuUri, {
-        useMongoClient: true
-    },
+    mongoUri || process.env.MONGODB_URI || herokuUri, { useNewUrlParser: true },
     function (err, db) {
         // console.log("db:", db);
         if (err) throw err;
 
-        db.collection("users").countDocuments(function (err, count) {
+        db.collection("userData").countDocuments(function (err, count) {
             if (err) throw err;
             app.get("/users", (req, res) => {
                 db.User.find({}, async (err, doc) => {
@@ -51,7 +52,7 @@ app.get("/users", (req, res) => {
         res.send(doc)
     });
 })
-app.post("/users/create", async (req, res) => {
+app.post("/users/create/", async (req, res) => {
     const userInfo = req.body;
     console.log("req.body:", userInfo);
 
