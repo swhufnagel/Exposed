@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const db = require("../models");
-
+const cors = require("cors");
 const PORT_NUMBER = process.env.PORT || 8080;
 const app = express();
 const mongoUri = 'mongodb+srv://swhufnagel:poopyy.1@exposeddatagroup0-s3r3z.mongodb.net/test'
@@ -34,7 +34,14 @@ mongoose.connect(
 );
 
 // Routing
+app.use(cors())
 app.use(express.json());
+app.use('/*', function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, x-access-token, x-user-pathway, x-mongo-key, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
+    next();
+});
 
 app.get("/", (req, res) => {
     res.send("Push Notification Server Running");

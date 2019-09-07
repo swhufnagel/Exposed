@@ -10,7 +10,7 @@ import TouchButton from '../components/button';
 import SvgAnimatedLinearGradient from 'react-native-svg-animated-linear-gradient'
 import Svg, { Circle, Rect } from 'react-native-svg';
 
-const endpoint = 'https://exposed-app.herokuapp.com';
+const endpoint = 'https://exposed-app.herokuapp.com/';
 
 
 function toQueryString(params) {
