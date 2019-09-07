@@ -5,16 +5,24 @@ const db = require("../models");
 const PORT_NUMBER = process.env.PORT || 8080;
 const app = express();
 const mongoUri = 'mongodb+srv://swhufnagel:poopyy.1@exposeddatagroup0-s3r3z.mongodb.net/test'
+const herokuUri = 'mongodb://swhufnagel:poopyy11@ds211368.mlab.com:11368/heroku_14z6qc4d'
 // Define Middleware
 
 mongoose.connect(
-    process.env.MONGO_URI, { useNewUrlParser: true },
+    mongoUri || process.env.MONGODB_URI || herokuUri, {
+        useMongoClient: true
+    },
     function (err, db) {
         // console.log("db:", db);
         if (err) throw err;
 
         db.collection("users").countDocuments(function (err, count) {
             if (err) throw err;
+            app.get("/users", (req, res) => {
+                db.User.find({}, async (err, doc) => {
+                    res.send(doc)
+                });
+            })
             console.log(`Total User Rows: ${count}`);
         });
 
