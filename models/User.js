@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 // import Contacts from "./Contacts";
 // import contacts from "./Contacts";
 const Schema = mongoose.Schema;

@@ -1,12 +1,9 @@
-import express from "express";
-import Expo from "expo-server-sdk";
-import mongoose from "mongoose";
-
-const db = require("./models");
+const express = require("express");
+const mongoose = require("mongoose");
+const db = require("../models");
 
 const PORT_NUMBER = process.env.PORT || 8080;
 const app = express();
-const expo = new Expo();
 const mongoUri = 'mongodb+srv://swhufnagel:poopyy.1@exposeddatagroup0-s3r3z.mongodb.net/test'
 // Define Middleware
 
