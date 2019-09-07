@@ -8,7 +8,7 @@ const mongoUri = 'mongodb+srv://swhufnagel:poopyy.1@exposeddatagroup0-s3r3z.mong
 // Define Middleware
 
 mongoose.connect(
-    mongoUri, { useNewUrlParser: true },
+    process.env.MONGO_URI, { useNewUrlParser: true },
     function (err, db) {
         // console.log("db:", db);
         if (err) throw err;
