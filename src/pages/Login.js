@@ -9,10 +9,43 @@ import TouchableScale from 'react-native-touchable-scale'; // https://github.com
 import TouchButton from '../components/button';
 import SvgAnimatedLinearGradient from 'react-native-svg-animated-linear-gradient'
 import Svg, { Circle, Rect } from 'react-native-svg';
+import * as Font from 'expo-font';
 
 const endpoint = 'https://exposed-app.herokuapp.com/';
 
+const styles = StyleSheet.create({
+    App: {
+        height: "200%",
+        // paddingTop: Constants.statusBarHeight
 
+    },
+    container: {
+        flex: 1,
+    },
+    AppLogo: {
+        width: 425,
+        height: 425
+    },
+    LoginButton: {
+        width: 250,
+        borderRadius: 25,
+        borderBottomColor: "#522c2c",
+        borderRightColor: "#522c2c",
+        padding: 5,
+        backgroundColor: "#852e2e",
+        borderWidth: 2,
+        borderColor: "#cc2525",
+        color: 'white',
+    },
+    buttonText: {
+        padding: 8,
+        fontSize: 24,
+        textAlign: 'center',
+        fontFamily: 'audioWide',
+        fontWeight: '600'
+    }
+
+})
 function toQueryString(params) {
     return '?' + Object.entries(params)
         .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
@@ -24,7 +57,8 @@ class LoginScreen extends Component {
         this.state = {
             text: "",
             name: null,
-            userLoginData: ""
+            userLoginData: "",
+            loadingFont: true,
         }
     }
     static navigationOptions = ({ navigation }) => {
@@ -101,45 +135,16 @@ class LoginScreen extends Component {
         console.log('going to profile page');
         this.props.navigation.navigate("Profile", { userData: this.state.userLoginData });
     }
+    async componentWillMount() {
+        await Font.loadAsync({
+            'audioWide': require('../../assets/fonts/Audiowide-Regular.ttf')
+        });
+        this.setState({ loadingFont: false })
+    }
     render() {
-        const theme = {
-            colors: {
-                primary: 'black',
-            }
-        }
-        const styles = StyleSheet.create({
-            App: {
-                height: "200%",
-                // paddingTop: Constants.statusBarHeight
 
-            },
-            container: {
-                flex: 1,
-            },
-            AppLogo: {
-                width: 425,
-                height: 425
-            },
-            LoginButton: {
-                width: 250,
-                borderRadius: 25,
-                borderBottomColor: "#522c2c",
-                borderRightColor: "#522c2c",
-                padding: 5,
-                backgroundColor: "#852e2e",
-                borderWidth: 2,
-                borderColor: "#cc2525",
-                color: 'white',
-            },
-            buttonText: {
-                padding: 8,
-                fontSize: 20,
-                textAlign: 'center'
-            }
-
-        })
         return (
-            <ThemeProvider theme={theme}>
+            <ThemeProvider>
                 <View className="App" >
                     <LinearGradient
                         colors={['#FF0000', '#faa2a2', '#db9c9c', '#cc8585', '#d93f3f']}
@@ -154,12 +159,13 @@ class LoginScreen extends Component {
                             source={require('../../assets/rawLogo.png')}
                             style={styles.AppLogo}
                             className="AppLogo" alt="logo" />
-                        <TouchButton
-                            style={styles.LoginButton}
-                            buttonText={<Text style={styles.buttonText}>Login </Text>}
-                            navigation={this.props.navigation}
-                            onPress={this._loginWithAuth0}
-                        />
+                        {this.state.loadingFont ? <Text>Loading</Text> :
+                            <TouchButton
+                                style={styles.LoginButton}
+                                buttonText={<Text style={styles.buttonText}>Login </Text>}
+                                navigation={this.props.navigation}
+                                onPress={this._loginWithAuth0}
+                            />}
                         {/* </SvgAnimatedLinearGradient> */}
                     </LinearGradient>
                 </View>

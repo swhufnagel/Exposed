@@ -38,7 +38,7 @@ export default class Photos extends PureComponent {
         }
     }
     async componentDidMount() {
-        this.getPhotos();
+
     }
     componentWillMount() {
         ShakeEventExpo.addListener(() => {
@@ -84,6 +84,7 @@ export default class Photos extends PureComponent {
             <View>
                 <LinearGradient colors={['#FF0000', '#faa2a2', '#db9c9c', '#cc8585', '#d93f3f']}
                     style={{ width: '100%', height: '100%', padding: 0, alignItems: 'center', borderRadius: 0 }}>
+
                     {this.state.loaded ? <ScrollView style={styles.container}>
                         <View style={styles.container}>
                             <GridList

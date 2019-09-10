@@ -7,6 +7,7 @@ import * as Permissions from 'expo-permissions';
 import * as Contact from "expo-contacts";
 import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
 import { Entypo } from '@expo/vector-icons';
+import * as Font from 'expo-font';
 
 class Contacts extends React.Component {
     static navigationOptions = ({ navigation }) => {
@@ -33,8 +34,8 @@ class Contacts extends React.Component {
             permissions: false,
         }
     }
-    async componentDidMount() {
-        this.permissionFlow();
+    async componentWillMount() {
+
     }
     permissionFlow = async () => {
         const { status } = await Permissions.askAsync(Permissions.CONTACTS);
@@ -96,7 +97,8 @@ class Contacts extends React.Component {
                                     name={l.name}
                                     bottomDivider={true}
                                     containerStyle={styles.item}
-                                    titleStyle={{ color: 'white', fontWeight: 'bold' }}
+                                    titleStyle={{ color: 'black', fontWeight: '400', fontSize: '24' }}
+                                    subtitleStyle={{ fontWeight: '200', fontSize: 18 }}
                                     leftAvatar={{
                                         source: {
                                             uri: this.state.contacts[i].imageAvailable ?

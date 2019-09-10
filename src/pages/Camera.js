@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { LinearGradient } from "expo-linear-gradient";
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import { Entypo } from '@expo/vector-icons';
@@ -28,28 +29,30 @@ export default class CameraView extends React.Component {
         }
     };
     state = {
-        hasCameraPermission: null,
+        hasCameraPermission: false,
         type: Camera.Constants.Type.back,
     };
 
     async componentDidMount() {
+
+    }
+    getCamera = async () => {
         const { status } = await Permissions.askAsync(Permissions.CAMERA);
         this.setState({ hasCameraPermission: status === 'granted' });
     }
-
     render() {
-        const { hasCameraPermission } = this.state;
-        if (hasCameraPermission === null) {
-            return <View />;
-        } else if (hasCameraPermission === false) {
+        if (this.state.hasCameraPermission === false) {
             return <View>
-                <Entypo
-                    name="lock"
-                    size={100}
-                    color="rgba(147, 147, 147, 0.52)"
-                    onPress={this.getPhotos}
-                    style={styles.lock} />
-                <Text onPress={this.getPhotos}>Click or shake to unlock</Text>
+                <LinearGradient colors={['#FF0000', '#faa2a2', '#db9c9c', '#cc8585', '#d93f3f']}
+                    style={{ width: '100%', height: '100%', padding: 0, alignItems: 'center', borderRadius: 0 }}>
+                    <Entypo
+                        name="lock"
+                        size={100}
+                        color="rgba(147, 147, 147, 0.52)"
+                        onPress={this.getCamera}
+                        style={styles.lock} />
+                    <Text onPress={this.getCamera}>Click or shake to unlock</Text>
+                </LinearGradient>
             </View>;
         } else {
             return (

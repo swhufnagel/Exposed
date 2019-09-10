@@ -1,7 +1,9 @@
 import TouchableScale from 'react-native-touchable-scale';
 import React, { Component } from "react";
 import Text from 'react-native'
+
 const Button = function (props) {
+
     return (
         <TouchableScale
             style={{
@@ -18,7 +20,7 @@ const Button = function (props) {
                 shadowOffset: { width: 2, height: 5 },
                 shadowOpacity: 0.8,
                 shadowRadius: 2,
-                elevation: 1,
+                elevation: 2,
 
             }}
             onPress={props.onPress}
