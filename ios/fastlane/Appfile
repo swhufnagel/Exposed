@@ -1,0 +1,8 @@
+app_identifier("com.huffThought.exposed") # The bundle identifier of your app
+apple_id("lowngemusic@gmail.com") # Your Apple email address
+
+itc_team_id("120362743") # App Store Connect Team ID
+team_id("SBWLWW9X83") # Developer Portal Team ID
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile

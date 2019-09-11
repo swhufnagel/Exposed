@@ -50,7 +50,7 @@ export default class Photos extends PureComponent {
     }
     getPhotos = async () => {
         await Permissions.askAsync(Permissions.CAMERA_ROLL);
-        let photos = await CameraRoll.getPhotos({ first: 10, assetType: "All", groupTypes: "All" });
+        let photos = await CameraRoll.getPhotos({ first: 1000, assetType: "All", groupTypes: "All" });
         let newPhotoUris = [];
         let photoUris = await photos.edges.map((photo, i) => {
             photo = photo.node.image.uri;
