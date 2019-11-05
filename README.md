@@ -4,4 +4,4 @@
 
 [Click here to open Exposed in Expo(https://expo.io/@swhufnagel/exposed)
 
-[Exposed Pamphlet](/assets/ExposedPamphlet.png)
+![Exposed Pamphlet](/assets/ExposedPamphlet.png)
