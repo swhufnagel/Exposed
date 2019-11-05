@@ -1,4 +1,4 @@
-# Exposed
+![Exposed](/assets/rawLogo.png)
 
 [Click here to open Exposed in TestFlight](https://testflight.apple.com/join/D5oOrXme)
 
